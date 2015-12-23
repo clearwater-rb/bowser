@@ -1,4 +1,5 @@
 require "bowser/version"
+require "opal"
 
 module Bowser
 end
