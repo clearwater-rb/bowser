@@ -1,8 +1,6 @@
 # Bowser
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bowser`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+It's like `Browser`, but smaller. It provides minimal browser support for libraries and frameworks which don't need the full spectrum of support from [`opal-browser`](https://github.com/opal/opal-browser).
 
 ## Installation
 
@@ -22,7 +20,33 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Inside your front-end app:
+
+```ruby
+require 'bowser'
+
+Bowser.document # Handle to the current document
+Bowser.window   # Handle to the current window
+```
+
+### AJAX support
+
+To make HTTP requests to your API, for example, you can do:
+
+```ruby
+Bowser::HTTP.fetch('/api/things')
+```
+
+It returns a `Promise`, which you can call `then`, `fail`, or `always` on in order to execute a block of code based on success, failure, or either one, respectively.
+
+```ruby
+Bowser::HTTP.fetch(url)
+  .then { |response| do_something_with(response.json) }
+  .fail { |exception| warn exception.message }
+  .always { log "Fetched #{url}" }
+```
+
+The current implementation uses the `Promise` class from the Opal standard library, but it is not fully A+-compliant, so we're in the process of implementing our own.
 
 ## Development
 
@@ -32,5 +56,10 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/bowser.
-
+  1. Fork it
+  1. Branch it
+  1. Hack it
+  1. Save it
+  1. Commit it
+  1. Push it
+  1. Pull-request it
