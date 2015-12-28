@@ -41,6 +41,18 @@ module Bowser
         `window.location.pathname`
       end
     end
+
+    module History
+      module_function
+
+      def push path
+        `window.history.pushState({}, '', path)`
+      end
+    end
+
+    def history
+      History
+    end
   end
 
   module_function
