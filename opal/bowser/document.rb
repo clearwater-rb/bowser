@@ -15,7 +15,7 @@ module Bowser
 
     def [] css
       native = `#@native.querySelector(css)`
-      if `#{native} === undefined`
+      if `#{native} === null`
         nil
       else
         Element.new(native)
