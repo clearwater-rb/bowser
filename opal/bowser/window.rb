@@ -34,6 +34,10 @@ module Bowser
       Location
     end
 
+    def scroll x, y
+      `window.scrollTo(x, y)`
+    end
+
     module Location
       module_function
 
