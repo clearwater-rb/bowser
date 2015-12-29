@@ -44,6 +44,14 @@ module Bowser
       def path
         `window.location.pathname`
       end
+
+      def href
+        `window.location.href`
+      end
+
+      def href= href
+        `window.location.href = href`
+      end
     end
 
     module History
