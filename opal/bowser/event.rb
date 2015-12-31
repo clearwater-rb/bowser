@@ -29,16 +29,21 @@ module Bowser
       `#@native.altKey`
     end
 
-    def button
-      `#@native.button`
-    end
-
     def target
       Element.new(`#@native.currentTarget`)
     end
 
     def code
       `#@native.keyCode`
+    end
+
+    def method_missing *args
+      if args.one?
+        property = args[0].gsub(/_[a-z]/) { |match| match[-1, 1].upcase }
+        `#@native[property]`
+      else
+        super
+      end
     end
   end
 end
