@@ -1,4 +1,5 @@
 require 'bowser/event_target'
+require 'bowser/file_list'
 
 module Bowser
   class Element
@@ -45,6 +46,10 @@ module Bowser
 
     def value
       `#@native.value`
+    end
+
+    def files
+      FileList.new(`#@native.files`)
     end
   end
 end
