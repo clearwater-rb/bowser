@@ -9,6 +9,11 @@ module Bowser
       self
     end
 
+    def stop_propagation
+      `#@native.stopPropagation()`
+      self
+    end
+
     def prevented?
       `#@native.defaultPrevented`
     end
