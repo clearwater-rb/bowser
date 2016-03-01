@@ -1,3 +1,5 @@
+require 'json'
+
 module Bowser
   class WebSocket
     EVENT_NAMES = %w(
