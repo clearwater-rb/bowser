@@ -75,11 +75,15 @@ module Bowser
         @native = native
       end
 
+      def text
+        `#@native.data`
+      end
+
       def data
         @data ||= get_data
       end
 
-      def get_data(data=`#@native.data`)
+      def get_data(data=text)
         JSON.parse(data)
       end
     end
