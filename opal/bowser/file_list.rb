@@ -1,3 +1,4 @@
+require 'bowser/event_target'
 require 'promise'
 
 module Bowser
@@ -6,12 +7,17 @@ module Bowser
 
     def initialize native
       @native = `#{native} || []`
+      @files = length.times.each_with_object([]) { |index, array|
+        array[index] = File.new(`#@native[index]`)
+      }
+    end
+
+    def file
+      @files.first
     end
 
     def [] index
-      if index < length && index >= 0
-        File.new(`#@native[index]`)
-      end
+      @files[index]
     end
 
     def length
@@ -20,19 +26,26 @@ module Bowser
     alias size length
 
     def each &block
-      length.times.each do |i|
-        block.call self[i]
+      @files.each do |file|
+        block.call file
       end
     end
 
     def to_a
-      map { |file| file }
+      @files.dup # Don't return a value that can mutate our internal state
     end
     alias to_ary to_a
 
+    def to_s
+      @files.to_s
+    end
+
     class File
+      attr_reader :data
+
       def initialize native
         @native = native
+        @data = nil
       end
 
       def name
@@ -53,16 +66,37 @@ module Bowser
 
       def read
         promise = Promise.new
-        reader = Native(`new FileReader()`)
-        reader[:onload] = proc do
-          promise.resolve reader.result
+        reader = FileReader.new
+        reader.on :load do
+          result = reader.result
+
+          @data = result
+          promise.resolve result
         end
-        reader[:onerror] = proc do
+
+        reader.on :error do
           promise.reject reader.result
         end
-        reader.readAsBinaryString(`#@native`)
+
+        reader.read_as_binary_string self
 
         promise
+      end
+
+      class FileReader
+        include EventTarget
+
+        def initialize
+          @native = `new FileReader()`
+        end
+
+        def result
+          `#@native.result`
+        end
+
+        def read_as_binary_string file
+          `#@native.readAsBinaryString(file.native)`
+        end
       end
     end
   end
