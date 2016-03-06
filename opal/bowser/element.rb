@@ -48,6 +48,11 @@ module Bowser
       `#@native.value`
     end
 
+    # Convenience for when you only need a single file
+    def file
+      files.first
+    end
+
     def files
       FileList.new(`#@native.files`)
     end

@@ -12,10 +12,6 @@ module Bowser
       }
     end
 
-    def file
-      @files.first
-    end
-
     def [] index
       @files[index]
     end
