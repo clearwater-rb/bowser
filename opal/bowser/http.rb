@@ -37,7 +37,7 @@ module Bowser
       connect_events_to_promise request, promise
 
       form = FormData.new
-      Array(files).each do |file|
+      files.each do |file|
         form.append "#{key}#{key_suffix}", file
       end
 
@@ -47,7 +47,7 @@ module Bowser
     end
 
     def upload_file(url, file, key: 'file')
-      upload_files(url, file, key: key, key_suffix: nil)
+      upload_files(url, [file], key: key, key_suffix: nil)
     end
 
     def connect_events_to_promise(request, promise)
