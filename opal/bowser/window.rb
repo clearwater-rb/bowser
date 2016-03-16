@@ -15,7 +15,7 @@ module Bowser
       end
     else
       def animation_frame &block
-        delay(0.16, &block)
+        delay(1.0 / 60, &block)
         self
       end
     end
