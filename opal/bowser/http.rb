@@ -51,7 +51,7 @@ module Bowser
     end
 
     def connect_events_to_promise(request, promise)
-      request.on :success do
+      request.on :load do
         promise.resolve request.response
       end
       request.on :error do |event|
