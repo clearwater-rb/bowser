@@ -41,6 +41,14 @@ module Bowser
     module Location
       module_function
 
+      def hash
+        `window.location.hash`
+      end
+
+      def hash= hash
+        `window.location.hash = hash`
+      end
+
       def path
         `window.location.pathname`
       end
@@ -56,6 +64,10 @@ module Bowser
 
     module History
       module_function
+
+      def has_push_state?
+        `!!window.history.pushState`
+      end
 
       def push path
         `window.history.pushState({}, '', path)`
