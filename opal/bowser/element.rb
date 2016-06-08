@@ -20,16 +20,16 @@ module Bowser
 
     def clear
       %x{
-          var native = #@native;
+        var native = #@native;
 
-          if(native.nodeName === 'INPUT' || native.nodeName === 'TEXTAREA') {
-            native.value = null;
-          } else {
-            var children = native.children;
-            for(var i = 0; i < children.length; i++) {
-              children[i].remove();
-            }
+        if(native.nodeName === 'INPUT' || native.nodeName === 'TEXTAREA') {
+          native.value = null;
+        } else {
+          var children = native.children;
+          for(var i = 0; i < children.length; i++) {
+            children[i].remove();
           }
+        }
       }
       self
     end
