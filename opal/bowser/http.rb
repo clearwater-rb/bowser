@@ -30,9 +30,9 @@ module Bowser
       promise
     end
 
-    def upload_files(url, files, key: 'files', key_suffix: '[]')
+    def upload_files(url, files, key: 'files', key_suffix: '[]', method: :post)
       promise = Promise.new
-      request = Request.new(:post, url)
+      request = Request.new(method, url)
 
       connect_events_to_promise request, promise
 
@@ -46,8 +46,8 @@ module Bowser
       promise
     end
 
-    def upload_file(url, file, key: 'file')
-      upload_files(url, [file], key: key, key_suffix: nil)
+    def upload_file(url, file, key: 'file', method: :post)
+      upload_files(url, [file], key: key, key_suffix: nil, method: method)
     end
 
     def connect_events_to_promise(request, promise)
