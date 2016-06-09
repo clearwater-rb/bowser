@@ -37,6 +37,12 @@ module Bowser
         expect(element.foo?).to be true
         expect(element.bar?).to be true
       end
+
+      it 'proxies setting properties' do
+        element.foo = 'bar'
+
+        expect(`#{native}.foo`).to eq 'bar'
+      end
     end
   end
 end

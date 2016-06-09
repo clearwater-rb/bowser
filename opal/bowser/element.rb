@@ -55,7 +55,14 @@ module Bowser
 
     # Fall back to native properties.
     def method_missing message, *args, &block
-      camel_cased_message = message.gsub(/_\w/) { |match| match[1].upcase }
+      camel_cased_message = message
+        .gsub(/_\w/) { |match| match[1].upcase }
+        .sub(/=$/, '')
+
+      # translate setting a property
+      if message.end_with? '='
+        return `#@native[camel_cased_message] = args[0]`
+      end
 
       # translate `supported?` to `supported` or `isSupported`
       if message.end_with? '?'
