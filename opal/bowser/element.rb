@@ -18,24 +18,49 @@ module Bowser
       `#@native.innerHTML`
     end
 
-    def clear
-      %x{
-        var native = #@native;
+    def inner_html= html
+      `#@native.innerHTML = html`
+    end
 
-        if(native.nodeName === 'INPUT' || native.nodeName === 'TEXTAREA') {
-          native.value = null;
-        } else {
-          var children = native.children;
-          for(var i = 0; i < children.length; i++) {
-            children[i].remove();
-          }
+    def children
+      elements = []
+
+      %x{
+        var children = #@native.children;
+        for(var i = 0; i < children.length; i++) {
+          elements[i] = #{Element.new(`children[i]`)};
         }
       }
+
+      elements
+    end
+
+    def empty?
+      `#@native.children.length === 0`
+    end
+
+    def clear
+      if %w(input textarea).include? type
+        `#@native.value = null`
+      else
+        children.each do |child|
+          remove_child child
+        end
+      end
+
       self
     end
 
+    def remove_child child
+      `#@native.removeChild(child.native ? child.native : child)`
+    end
+
+    def type
+      `#@native.nodeName`.downcase
+    end
+
     def append node
-      `#@native.appendChild(node)`
+      `#@native.appendChild(node.native ? node.native : node)`
       self
     end
 

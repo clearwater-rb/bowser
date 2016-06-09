@@ -5,6 +5,26 @@ module Bowser
     let(:native) { `{}` }
     let(:element) { Element.new(native) }
 
+    describe :type do
+      it 'returns the type of the native element' do
+        `#{native}.nodeName = 'INPUT'`
+
+        expect(element.type).to eq 'input'
+      end
+    end
+
+    describe :clear do
+      let(:native) { `document.createElement('div')` }
+
+      it 'relieves an element of its child nodes' do
+        element.append `document.createElement('span')`
+
+        element.clear
+
+        expect(element).to be_empty
+      end
+    end
+
     context 'proxying native properties/methods' do
       it 'passes through to native properties' do
         `#{native}.foo = "bar"`
