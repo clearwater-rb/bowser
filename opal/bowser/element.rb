@@ -44,10 +44,6 @@ module Bowser
       `!!#@native.checked`
     end
 
-    def value
-      `#@native.value`
-    end
-
     # Convenience for when you only need a single file
     def file
       files.first
