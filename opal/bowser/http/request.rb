@@ -1,5 +1,5 @@
 require 'bowser/http/response'
-require 'bowser/http/event'
+require 'bowser/event_target'
 
 module Bowser
   module HTTP
