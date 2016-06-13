@@ -101,7 +101,13 @@ module Bowser
       # If the native element doesn't have this property, bubble it up
       super if `typeof(#@native[camel_cased_message]) === 'undefined'`
 
-      property = `#@native[camel_cased_message] || nil`
+      property = `#@native[camel_cased_message]`
+
+      if `property === false`
+        return false
+      else
+        property = `property || nil`
+      end
 
       # If it's a method, call it. Otherwise, return it.
       if `typeof(property) === 'function'`

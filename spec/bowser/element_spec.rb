@@ -51,11 +51,11 @@ module Bowser
       it 'proxies predicate methods' do
         %x{
           #{native}.isFoo = true;
-          #{native}.bar = true;
+          #{native}.bar = false;
         }
 
         expect(element.foo?).to be true
-        expect(element.bar?).to be true
+        expect(element.bar?).to be false
       end
 
       it 'proxies setting properties' do
