@@ -116,5 +116,9 @@ module Bowser
         property
       end
     end
+
+    def to_n
+      @native
+    end
   end
 end

@@ -64,5 +64,9 @@ module Bowser
         expect(`#{native}.foo`).to eq 'bar'
       end
     end
+
+    it 'can be converted back into a native element' do
+      expect(element.to_n).to be native
+    end
   end
 end
