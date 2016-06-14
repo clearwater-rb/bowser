@@ -67,7 +67,7 @@ module Bowser
       native = `{}`
       event = Event.new(native)
 
-      expect(event.to_n).to be native
+      expect(`#{event.to_n} === #{native}`).to be_truthy
     end
   end
 end

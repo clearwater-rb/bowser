@@ -66,7 +66,7 @@ module Bowser
     end
 
     it 'can be converted back into a native element' do
-      expect(element.to_n).to be native
+      expect(`#{element.to_n} === #{native}`).to be_truthy
     end
   end
 end
