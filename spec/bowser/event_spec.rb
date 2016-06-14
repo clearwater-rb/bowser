@@ -62,5 +62,12 @@ module Bowser
         expect(event.omg_lol).to eq 'wtf'
       end
     end
+
+    it 'unwraps native event' do
+      native = `{}`
+      event = Event.new(native)
+
+      expect(event.to_n).to be native
+    end
   end
 end

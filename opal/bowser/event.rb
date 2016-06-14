@@ -50,5 +50,9 @@ module Bowser
         super
       end
     end
+
+    def to_n
+      @native
+    end
   end
 end
