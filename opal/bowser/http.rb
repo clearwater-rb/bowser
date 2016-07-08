@@ -8,9 +8,9 @@ module Bowser
   module HTTP
     module_function
 
-    def fetch(url)
+    def fetch(url, method: :get)
       promise = Promise.new
-      request = Request.new(:get, url)
+      request = Request.new(method, url)
 
       connect_events_to_promise request, promise
 
@@ -19,9 +19,9 @@ module Bowser
       promise
     end
 
-    def upload(url, data, content_type: 'application/json')
+    def upload(url, data, content_type: 'application/json', method: :post)
       promise = Promise.new
-      request = Request.new(:post, url)
+      request = Request.new(method, url)
 
       connect_events_to_promise request, promise
 
