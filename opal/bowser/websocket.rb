@@ -1,3 +1,4 @@
+require 'bowser/window'
 require 'json'
 
 module Bowser
@@ -12,7 +13,7 @@ module Bowser
     def initialize url
       @url = url
       @native = `new WebSocket(url)`
-      @handlers = Hash.new { |h, k| h[k] = [] }
+      @handlers ||= Hash.new { |h, k| h[k] = [] }
       add_handlers
     end
 
@@ -27,6 +28,15 @@ module Bowser
     def send_message msg
       `#@native.send(#{JSON.dump(msg)})`
       self
+    end
+
+    def autoreconnect!
+      return if @autoreconnect
+      @autoreconnect = true
+
+      on :close do
+        Window.delay(1) { initialize @url }
+      end
     end
 
     private
