@@ -30,12 +30,13 @@ module Bowser
       self
     end
 
-    def autoreconnect!
+    # Reconnect the websocket after a short delay if it is interrupted
+    def autoreconnect!(delay: 1)
       return if @autoreconnect
       @autoreconnect = true
 
       on :close do
-        Window.delay(1) { initialize @url }
+        Window.delay(delay) { initialize @url }
       end
     end
 
