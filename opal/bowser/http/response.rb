@@ -16,8 +16,7 @@ module Bowser
       end
 
       def json
-        body = self.body
-        @json ||= JSON.parse(body) if `body !== undefined`
+        @json ||= JSON.parse(body) if `#{body} !== undefined`
       end
 
       def success?
