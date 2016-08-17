@@ -52,7 +52,11 @@ module Bowser
 
     def connect_events_to_promise(request, promise)
       request.on :load do
-        promise.resolve request.response
+        if request.response.success?
+          promise.resolve request.response
+        else
+          promise.reject request.response
+        end
       end
       request.on :error do |event|
         promise.reject Native(event)
