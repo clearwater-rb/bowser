@@ -8,13 +8,13 @@ module Bowser
   module HTTP
     module_function
 
-    def fetch(url, method: :get)
+    def fetch(url, method: :get, headers: {}, data: nil)
       promise = Promise.new
       request = Request.new(method, url)
 
       connect_events_to_promise request, promise
 
-      request.send
+      request.send(data: data, headers: headers)
 
       promise
     end
