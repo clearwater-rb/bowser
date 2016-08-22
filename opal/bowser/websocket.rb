@@ -10,11 +10,14 @@ module Bowser
       close
     )
 
-    def initialize url
+    def initialize url, native: `new WebSocket(url)`
       @url = url
-      @native = `new WebSocket(url)`
+      @native = native
       @handlers ||= Hash.new { |h, k| h[k] = [] }
       add_handlers
+
+      on(:open) { @connected = true }
+      on(:close) { @connected = false }
     end
 
     def on event_name, &block
@@ -30,6 +33,10 @@ module Bowser
       self
     end
 
+    def connected?
+      @connected
+    end
+
     # Reconnect the websocket after a short delay if it is interrupted
     def autoreconnect!(delay: 1)
       return if @autoreconnect
@@ -38,6 +45,10 @@ module Bowser
       on :close do
         Window.delay(delay) { initialize @url }
       end
+    end
+
+    def close reason
+      `#@native.close(reason)`
     end
 
     private
