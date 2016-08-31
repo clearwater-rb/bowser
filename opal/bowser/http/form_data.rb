@@ -1,8 +1,17 @@
 module Bowser
   module HTTP
     class FormData
-      def initialize
+      def initialize attributes={}
         @native = `new FormData()`
+        attributes.each do |key, value|
+          if `!!value.$$class` && value.respond_to?(:each)
+            value.each do |item|
+              append "#{key}[]", item
+            end
+          else
+            append key, value
+          end
+        end
       end
 
       def append key, value
