@@ -74,6 +74,18 @@ module Bowser
       def done?
         ready_state >= DONE
       end
+
+      def upload
+        @upload ||= Upload.new(`#@native.upload`)
+      end
+
+      class Upload
+        include EventTarget
+
+        def initialize(native)
+          @native = native
+        end
+      end
     end
   end
 end
