@@ -61,6 +61,17 @@ module Bowser
 
         expect(event.omg_lol).to eq 'wtf'
       end
+
+      it 'calls the native property if it is a function' do
+        native = `{
+          fooBar: function(a) { return [a]; },
+          omg: function() { return 'lol'; },
+        }`
+        event = Event.new(native)
+
+        expect(event.foo_bar(42)).to eq [42]
+        expect(event.omg).to eq 'lol'
+      end
     end
 
     it 'unwraps native event' do

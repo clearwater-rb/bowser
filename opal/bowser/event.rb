@@ -42,12 +42,16 @@ module Bowser
       `#@native.keyCode`
     end
 
-    def method_missing *args
-      if args.one?
-        property = args[0].gsub(/_[a-z]/) { |match| match[-1, 1].upcase }
-        `#@native[property]`
+    def method_missing name, *args
+      property = name.gsub(/_[a-z]/) { |match| match[-1, 1].upcase }
+      value = `#@native[property]`
+
+      if `!!value && #{Proc === value}`
+        value.call(*args)
+      elsif `value == null`
+        nil
       else
-        super
+        value
       end
     end
 
