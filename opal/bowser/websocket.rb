@@ -47,7 +47,7 @@ module Bowser
       end
     end
 
-    def close reason
+    def close reason=`undefined`
       `#@native.close(reason)`
     end
 
