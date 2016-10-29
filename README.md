@@ -50,6 +50,8 @@ The current implementation uses the `Promise` class from the Opal standard libra
 
 ## Contributing
 
+This project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md)
+
   1. Fork it
   1. Branch it
   1. Hack it
