@@ -35,7 +35,7 @@ module Bowser
     end
 
     def target
-      Element.new(`#@native.currentTarget`)
+      Element.new(`#@native.target`)
     end
 
     def code
