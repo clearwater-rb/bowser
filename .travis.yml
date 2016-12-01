@@ -4,4 +4,9 @@ rvm:
   - 2.3.1
   - jruby-9.0.5.0
   - jruby-9.1.1.0
-before_install: gem install bundler
+before_install:
+  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - tar -xjf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
+  - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
+  - gem install bundler
