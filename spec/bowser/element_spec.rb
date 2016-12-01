@@ -68,5 +68,19 @@ module Bowser
     it 'can be converted back into a native element' do
       expect(`#{element.to_n} === #{native}`).to be_truthy
     end
+
+    describe :== do
+      let(:native) { `document.createElement('div')` }
+
+      it 'is equal to instances wrapping the same native element' do
+        same = Element.new(native)
+        expect(element == same).to be_truthy
+      end
+
+      it 'is not equal to instances wrapping other native elements' do
+        other = Element.new(`document.createElement('div')`)
+        expect(element == other).to be_falsey
+      end
+    end
   end
 end

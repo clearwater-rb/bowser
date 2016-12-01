@@ -117,6 +117,10 @@ module Bowser
       end
     end
 
+    def ==(other)
+      `#@native === #{other.to_n}`
+    end
+
     def to_n
       @native
     end
