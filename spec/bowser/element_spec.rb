@@ -59,9 +59,9 @@ module Bowser
       end
 
       it 'proxies setting properties' do
-        element.foo = 'bar'
+        element.foo = 0
 
-        expect(`#{native}.foo`).to eq 'bar'
+        expect(`#{native}.foo`).to eq 0
       end
     end
 

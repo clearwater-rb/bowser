@@ -106,7 +106,7 @@ module Bowser
       if `property === false`
         return false
       else
-        property = `property || nil`
+        property = `property == null ? nil : property`
       end
 
       # If it's a method, call it. Otherwise, return it.
