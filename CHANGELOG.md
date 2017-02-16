@@ -1,3 +1,26 @@
+## Version 0.3.0
+
+- Fix bug with falsy JS values as element properties
+- Yield request object in `HTTP` methods (like `.fetch` and `.upload`)
+- Two `Element` instances holding the same native element are equal (`==`)
+- Fix travis + phantomjs 2
+- Add request upload object
+- Add Geolocation support
+
+## Version 0.2.2
+
+- Use event.target instead of event.currentTarget for native events
+- Fix spec failure with a more recent `opal-rspec`
+- Remove opal-rspec version restriction
+- Improve native pass-through in Event
+- Allow WebSockets to be closed
+
+## Version 0.2.1
+
+- Allow passing data, headers, and method with HTTP.fetch
+- Allow WebSockets to reconnect automatically with configurable delay
+- Relax Opal version restriction
+
 ## Version 0.2.0
 
 - Allow specifying methods for HTTP requests, including file uploads
