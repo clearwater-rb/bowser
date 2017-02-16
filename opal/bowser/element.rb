@@ -81,7 +81,7 @@ module Bowser
     # Fall back to native properties.
     def method_missing message, *args, &block
       camel_cased_message = message
-        .gsub(/_\w/) { |match| match[1].upcase }
+        .gsub(/_\w/) { |match| `match[1]`.upcase }
         .sub(/=$/, '')
 
       # translate setting a property
