@@ -84,6 +84,14 @@ module Bowser
       `#@native === #{other.to_n}`
     end
 
+    def []= attribute, value
+      `#@native.setAttribute(#{attribute}, #{value})`
+    end
+
+    def [] attribute
+      `#@native.getAttribute(#{attribute})`
+    end
+
     def to_n
       @native
     end
