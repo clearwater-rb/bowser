@@ -1,8 +1,10 @@
+require 'bowser/delegate_native'
 require 'bowser/event_target'
 require 'bowser/element'
 
 module Bowser
   module Document
+    extend DelegateNative
     extend EventTarget
 
     @native = `document`
