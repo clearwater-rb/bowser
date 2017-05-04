@@ -1,7 +1,9 @@
+require 'bowser/delegate_native'
 require 'bowser/event_target'
 
 module Bowser
   module Window
+    extend DelegateNative
     extend EventTarget
 
     @native = `window`
