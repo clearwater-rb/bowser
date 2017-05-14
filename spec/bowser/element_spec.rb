@@ -2,7 +2,7 @@ require 'bowser/element'
 
 module Bowser
   describe Element do
-    let(:native) { `{}` }
+    let(:native) { `{ tagName: 'DIV' }` }
     let(:element) { Element.new(native) }
 
     describe :type do

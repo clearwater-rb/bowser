@@ -7,6 +7,22 @@ module Bowser
     include EventTarget
     include DelegateNative
 
+    @tags = Hash.new(self)
+
+    def self.element *tags, &block
+      tags.each do |tag|
+        @tags
+          .fetch(tag) { @tags[tag] = const_set(tag.capitalize, Class.new(self)) }
+          .class_exec(&block)
+      end
+    end
+
+    def self.new(native)
+      element = @tags[`#{native}.tagName`.downcase].allocate
+      element.initialize native
+      element
+    end
+
     def initialize native
       @native = native
     end
