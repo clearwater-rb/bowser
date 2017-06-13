@@ -12,7 +12,7 @@ module Bowser
 
     if `#@native.requestAnimationFrame !== undefined`
       def animation_frame &block
-        `requestAnimationFrame(block)`
+        `requestAnimationFrame(function() { #{block.call} })`
         self
       end
     else
@@ -23,12 +23,12 @@ module Bowser
     end
 
     def delay duration, &block
-      `setTimeout(block, duration * 1000)`
+      `setTimeout(function() { #{block.call} }, duration * 1000)`
       self
     end
 
     def interval duration, &block
-      `setInterval(block, duration * 1000)`
+      `setInterval(function() { #{block.call} }, duration * 1000)`
       self
     end
 
