@@ -79,6 +79,10 @@ module Bowser
         promise
       end
 
+      def to_n
+        @native
+      end
+
       class FileReader
         include EventTarget
 
@@ -91,7 +95,7 @@ module Bowser
         end
 
         def read_as_binary_string file
-          `#@native.readAsBinaryString(file.native)`
+          `#@native.readAsBinaryString(#{file.to_n})`
         end
       end
     end
