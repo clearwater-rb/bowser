@@ -15,8 +15,8 @@ module Bowser
       end
 
       def append key, value
-        data = if `!!value.native`
-                 `value.native`
+        data = if `!!value['native']`
+                 `value['native']`
                else
                  value
                end

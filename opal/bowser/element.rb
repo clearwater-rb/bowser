@@ -70,7 +70,7 @@ module Bowser
     end
 
     def remove_child child
-      `#@native.removeChild(child.native ? child.native : child)`
+      `#@native.removeChild(child['native'] ? child['native'] : child)`
     end
 
     def type
@@ -78,7 +78,7 @@ module Bowser
     end
 
     def append node
-      `#@native.appendChild(node.native ? node.native : node)`
+      `#@native.appendChild(node['native'] ? node['native'] : node)`
       self
     end
 

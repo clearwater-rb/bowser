@@ -31,8 +31,8 @@ module Bowser
           `#@native.send()`
         elsif Hash === data
           `#@native.send(#{JSON.generate data})`
-        elsif `!!data.native`
-          `#@native.send(data.native)`
+        elsif `!!data['native']`
+          `#@native.send(data['native'])`
         else
           `#@native.send(data)`
         end
