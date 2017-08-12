@@ -71,7 +71,7 @@ module Bowser
       )
     end
 
-    def initialize(latitude:, longitude:, altitude:, accuracy:, altitude_accuracy:, heading:, speed:, timestamp:)
+    def initialize(latitude:, longitude:, accuracy:, altitude: nil, altitude_accuracy: nil, heading: nil, speed: nil, timestamp:)
       @latitude = latitude
       @longitude = longitude
       @altitude = altitude
