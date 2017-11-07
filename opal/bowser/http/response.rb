@@ -22,6 +22,7 @@ module Bowser
       def success?
         (200...400).cover? code
       end
+      alias ok? success?
 
       def fail?
         !success?
