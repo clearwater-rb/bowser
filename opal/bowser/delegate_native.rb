@@ -1,6 +1,14 @@
 module Bowser
   module DelegateNative
-    # Fall back to native properties.
+    # Fall back to native properties. If the message sent to this element is not
+    # recognized, it checks to see if it is a property of the native element. It
+    # also checks for variations of the message name, such as:
+    #
+    #   :supported? => [:supported, :isSupported]
+    #
+    # If a property with the specified message name is found and it is a
+    # function, that function is invoked with `args`. Otherwise, the property
+    # is returned as is.
     def method_missing message, *args, &block
       property_name = property_for_message(message)
       property = `#@native[#{property_name}]`
