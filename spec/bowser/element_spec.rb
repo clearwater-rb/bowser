@@ -87,6 +87,7 @@ module Bowser
       it 'sets and gets attributes' do
         native = `{
           attributes: {},
+          tagName: 'DIV',
           setAttribute: function(attr, value) { this.attributes[attr] = value },
           getAttribute: function(attr) { return this.attributes[attr] },
         }`
