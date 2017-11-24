@@ -3,6 +3,7 @@ require 'bowser/event_target'
 
 module Bowser
   module HTTP
+    # A Ruby object representing an HTTP request to a remote server.
     class Request
       include EventTarget
 
@@ -15,6 +16,8 @@ module Bowser
       LOADING          = 3
       DONE             = 4
 
+      # @param method [String] the HTTP method to use
+      # @param url [String] the URL to send the request to
       def initialize(method, url, native: `new XMLHttpRequest()`)
         @native = native
         @method = method
@@ -22,6 +25,11 @@ module Bowser
         @response = Response.new(@native)
       end
 
+      # Send the HTTP request
+      #
+      # @keywordparam data [Hash, Bowser::HTTP::FormData, nil] the data to send
+      #   with the request.
+      # @keywordparam headers [Hash] the HTTP headers to attach to the request
       def send(data: {}, headers: {})
         `#@native.open(#{method}, #{url})`
         @data = data
@@ -40,6 +48,10 @@ module Bowser
         self
       end
 
+      # Set the headers to the keys and values of the specified hash
+      #
+      # @param headers [Hash] the hash whose keys and values should be added as
+      #   request headers
       def headers= headers
         @headers = headers
         headers.each do |attr, value|
@@ -47,30 +59,37 @@ module Bowser
         end
       end
 
+      # @return [Boolean] true if this request is a POST request, false otherwise
       def post?
         method == :post
       end
 
+      # @return [Boolean] true if this request is a GET request, false otherwise
       def get?
         method == :get
       end
 
+      # @return [Numeric] the numeric readyState of the underlying XMLHttpRequest
       def ready_state
         `#@native.readyState`
       end
 
+      # @return [Boolean] true if this request has been sent, false otherwise
       def sent?
         ready_state >= OPENED
       end
 
+      # @return [Boolean] true if we have received response headers, false otherwise
       def headers_received?
         ready_state >= HEADERS_RECEIVED
       end
 
+      # @return [Boolean] true if we are currently downloading the response body, false otherwise
       def loading?
         ready_state == LOADING
       end
 
+      # @return [Boolean] true if the response has been completed, false otherwise
       def done?
         ready_state >= DONE
       end

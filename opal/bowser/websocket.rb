@@ -2,6 +2,7 @@ require 'bowser/window'
 require 'json'
 
 module Bowser
+  # A Ruby WebSocket class
   class WebSocket
     EVENT_NAMES = %w(
       open
@@ -10,6 +11,8 @@ module Bowser
       close
     )
 
+    # param url [String] the URL to connect to
+    # keywordparam native [JS] the native WebSocket connection
     def initialize url, native: `new WebSocket(url)`
       @url = url
       @native = native
@@ -20,6 +23,9 @@ module Bowser
       on(:close) { @connected = false }
     end
 
+    # Attach the given block as a handler for the specified event
+    #
+    # @param event_target [String] the name of the event to handle
     def on event_name, &block
       if EVENT_NAMES.include? event_name
         @handlers[event_name] << block
@@ -28,16 +34,23 @@ module Bowser
       end
     end
 
+    # Send the given message across the connection
+    #
+    # @param msg [Hash, Array] the message to send. Should be a JSON-serializable structure.
     def send_message msg
       `#@native.send(#{JSON.dump(msg)})`
       self
     end
 
+    # @return [Boolean] true if this socket is connected, false otherwise
     def connected?
       @connected
     end
 
     # Reconnect the websocket after a short delay if it is interrupted
+    #
+    # @keywordparam delay [Numeric] the number of seconds to wait before
+    #   reconnecting. Defaults to 1 second.
     def autoreconnect!(delay: 1)
       return if @autoreconnect
       @autoreconnect = true
@@ -47,6 +60,9 @@ module Bowser
       end
     end
 
+    # Close the current connection
+    #
+    # @param reason [String, nil] the reason this socket is being closed
     def close reason=`undefined`
       `#@native.close(reason)`
     end
@@ -113,6 +129,8 @@ module Bowser
 
   module_function
 
+  # @param url [String] the URL to connect to
+  # @return [Bowser::WebSocket] a websocket connection to the given URL
   def websocket *args
     WebSocket.new(*args)
   end

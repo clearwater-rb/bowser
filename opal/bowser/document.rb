@@ -11,10 +11,13 @@ module Bowser
 
     module_function
 
+    # @return [Bowser::Element] the body element of the current document
     def body
       @body ||= Element.new(`#@native.body`)
     end
 
+    # @return [Bowser::Element?] the first element that matches the given CSS
+    #   selector or `nil` if no elements match
     def [] css
       native = `#@native.querySelector(css)`
       if `#{native} === null`
@@ -24,6 +27,10 @@ module Bowser
       end
     end
 
+    # Create an element of the specified type
+    #
+    # @param type [String] the type of element to create
+    # @example Bowser.document.create_element('div')
     def create_element type
       Element.new(`document.createElement(type)`)
     end
@@ -31,6 +38,7 @@ module Bowser
 
   module_function
 
+  # @return [Document] the browser's document object
   def document
     Document
   end
