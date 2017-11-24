@@ -1,3 +1,10 @@
+## Version 0.5.0
+
+- IndexedDB support (#22)
+- ServiceWorker support (#5)
+- Subscript operators (`[]` and `[]=`) to get/set HTML attributes on `Element`
+- Added `HTTP::Response#ok?` to align with [`Response.ok`](https://developer.mozilla.org/en-US/docs/Web/API/Response/ok)
+
 ## Version 0.3.0
 
 - Fix bug with falsy JS values as element properties
