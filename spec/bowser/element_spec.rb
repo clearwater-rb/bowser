@@ -82,5 +82,19 @@ module Bowser
         expect(element == other).to be_falsey
       end
     end
+
+    describe 'attributes' do
+      it 'sets and gets attributes' do
+        native = `{
+          attributes: {},
+          setAttribute: function(attr, value) { this.attributes[attr] = value },
+          getAttribute: function(attr) { return this.attributes[attr] },
+        }`
+        element = Element.new(native)
+
+        element[:class] = 'foo bar'
+        expect(element[:class]).to eq 'foo bar'
+      end
+    end
   end
 end
