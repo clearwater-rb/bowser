@@ -19,7 +19,7 @@ module Bowser
     end
 
     def self.new(native)
-      element = @tags[`#{native}.tagName`.downcase].allocate
+      element = @tags[`(#{native}.tagName || '')`.downcase].allocate
       element.initialize native
       element
     end
