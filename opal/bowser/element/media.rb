@@ -25,6 +25,27 @@ module Bowser
       end
     end
 
+    element :video do
+      def fullscreen
+        fullscreen = %w(
+          requestFullScreen
+          requestFullscreen
+          webkitRequestFullScreen
+          webkitRequestFullscreen
+          mozRequestFullScreen
+          msRequestFullscreen
+        ).find { |prop| `!!#@native[prop]` }
+
+        if fullscreen
+          `#@native[fullscreen]()`
+        else
+          warn "[#{self.class}] Cannot determine the method to full-screen a video"
+          super
+        end
+      end
+      alias request_fullscreen fullscreen
+    end
+
     class TimeRanges
       include Enumerable
 
