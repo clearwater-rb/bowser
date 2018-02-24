@@ -15,7 +15,7 @@ module Bowser
       # is called from another `animation_frame` call, the block is run in the
       # following iteration of the event loop.
       def animation_frame &block
-        `requestAnimationFrame(function() { #{block.call} })`
+        `requestAnimationFrame(function(now) { #{block.call `now`} })`
         self
       end
     else
