@@ -1,5 +1,11 @@
 module Bowser
   module DelegateNative
+    # Provides a default initializer. This should be overridden in all but the
+    # simplest cases.
+    def initialize native
+      @native = native
+    end
+
     # Fall back to native properties. If the message sent to this element is not
     # recognized, it checks to see if it is a property of the native element. It
     # also checks for variations of the message name, such as:
@@ -19,7 +25,7 @@ module Bowser
       end
 
       # If the native element doesn't have this property, bubble it up
-      super if `#{property} === undefined`
+      super unless `#{property_name} in #@native`
 
       if `property === false`
         return false
