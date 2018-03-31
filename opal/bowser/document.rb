@@ -11,6 +11,11 @@ module Bowser
 
     module_function
 
+    # @return [Bowser::Element] the head element of the current document
+    def head
+      @head ||= Element.new(`#@native.head`)
+    end
+
     # @return [Bowser::Element] the body element of the current document
     def body
       @body ||= Element.new(`#@native.body`)
