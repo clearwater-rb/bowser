@@ -1,6 +1,7 @@
 require 'bowser/event_target'
 require 'bowser/file_list'
 require 'bowser/delegate_native'
+require 'bowser/iterable'
 
 module Bowser
   # Wrap a native DOM element
@@ -148,6 +149,16 @@ module Bowser
 
     def [] attribute
       `#@native.getAttribute(#{attribute})`
+    end
+
+    def query_selector selector
+      result = super
+
+      Element.new(result) if result
+    end
+
+    def query_selector_all selector
+      Iterable.new(super).map { |element| Element.new(element) }
     end
 
     # The native representation of this element.

@@ -1,4 +1,5 @@
 require 'bowser/element'
+require 'bowser/document'
 
 module Bowser
   describe Element do
@@ -95,6 +96,37 @@ module Bowser
 
         element[:class] = 'foo bar'
         expect(element[:class]).to eq 'foo bar'
+      end
+    end
+
+    describe 'query selectors' do
+      it 'returns a single element matching a selector' do
+        container = create
+        expected = create(class_name: 'foo').tap do |expected|
+          container.append expected
+        end
+        create(class_name: 'foo').tap do |another|
+          container.append another
+        end
+
+        expect(container.query_selector('.foo')).to eq expected
+      end
+
+      it 'returns all elements matching a selector' do
+        container = create
+        first = create(class_name: 'foo')
+        second = create(class_name: 'foo')
+
+        container.append first
+        container.append second
+
+        expect(container.query_selector_all('.foo')).to include first, second
+      end
+
+      def create type=:div, class_name: nil
+        Bowser.document.create_element(type).tap do |el|
+          el.className = class_name
+        end
       end
     end
   end
