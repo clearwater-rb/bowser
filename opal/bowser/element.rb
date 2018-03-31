@@ -139,14 +139,21 @@ module Bowser
       FileList.new(`#@native.files`)
     end
 
+    # Determine whether this is the same element
+    #
+    # @return [boolean] true if the element is the same, false otherwise
     def ==(other)
       `#@native === #{other.to_n}`
     end
 
+    # Set the specified attribute to the specified value
     def []= attribute, value
       `#@native.setAttribute(#{attribute}, #{value})`
     end
 
+    # Return the specified attribute
+    #
+    # @return [String] the value for the specified attribute
     def [] attribute
       `#@native.getAttribute(#{attribute})`
     end
