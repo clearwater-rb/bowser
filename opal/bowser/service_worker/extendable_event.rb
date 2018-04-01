@@ -1,3 +1,5 @@
+require 'bowser/service_worker/promise'
+
 module Bowser
   module ServiceWorker
     class ExtendableEvent
