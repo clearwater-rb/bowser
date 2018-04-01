@@ -23,7 +23,7 @@ module Bowser
         Promise.from_native(`
           #@native.open(name)
             .then(#{proc { |native| Cache.new(native) }})
-            .catch(#{proc { |native| `console.error(native)` }})
+            .catch(#{proc { |native| `console.error(native)`; raise native }})
         `)
       end
 
