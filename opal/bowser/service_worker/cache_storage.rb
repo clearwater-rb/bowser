@@ -36,6 +36,16 @@ module Bowser
           Promise.from_native(`#@native.addAll(#{requests.map(&:to_n)})`)
         end
 
+        def match request, **options
+          Promise
+            .from_native(`#@native.match(#{request.to_n}, #{options.to_n})`)
+            .then do |response|
+              if response
+                Response.from_native response
+              end
+            end
+        end
+
         def put request, response
           Promise.from_native(`#@native.put(#{request.to_n}, #{response.to_n})`)
         end
