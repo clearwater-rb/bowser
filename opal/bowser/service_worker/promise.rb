@@ -72,11 +72,11 @@ module Bowser
       end
 
       def resolved?
-        !value.nil?
+        defined? @value
       end
 
       def rejected?
-        !failure.nil?
+        defined? @failure
       end
 
       def to_n
