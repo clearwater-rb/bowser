@@ -21,7 +21,7 @@ module Bowser
       end
 
       def respond_with promise
-        `#@native.respondWith(#{promise.then(&:to_n).to_n})`
+        `#@native.respondWith(#{promise.then { |value| value.to_n }.to_n})`
       end
     end
   end
