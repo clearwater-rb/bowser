@@ -1,3 +1,26 @@
+## Version 0.5.4
+
+- Improve ServiceWorker promise support
+- Add support for `Document#head`
+- Add `Iterable` mixin to support JS Iterable interface
+  - Allows you to `include Iterable` on any JS iterable to make it `Enumerable`
+- Add initial Canvas support
+
+## Version 0.5.3
+
+- Add default `initialize` for `DelegateNative`
+- Return `nil` from `DelegateNative` methods that explicitly return `undefined`
+  - Previously, this would raise `NoMethodError`
+- Yield timestamp to `Bowser.window.animation_frame` block
+
+## Version 0.5.2
+
+- Allow videos to be full-screened
+
+## Version 0.5.1
+
+This appears to have been an accidental release. I actually don't know what happened here.
+
 ## Version 0.5.0
 
 - IndexedDB support (#22)
