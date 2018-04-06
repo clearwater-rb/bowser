@@ -37,12 +37,13 @@ module Bowser
         Promise.from_native `#@native.then(block)`
       end
 
-      def fail &block
+      def catch &block
         Promise.from_native `#@native.catch(block)`
       end
+      alias fail catch
 
       def always &block
-        Promise.from_native `#@native.then(block).fail(block)`
+        Promise.from_native `#@native.then(block, block)`
       end
 
       def resolve value
@@ -87,13 +88,13 @@ module Bowser
         Opal.defn(self, 'then', function(callback) {
           var self = this;
 
-          #{self.then(&`callback`)};
+          return #{self.then(&`callback`)};
         });
 
         Opal.defn(self, 'catch', function(callback) {
           var self = this;
 
-          #{self.fail(&`callback`)};
+          return #{self.catch(&`callback`)};
         });
       }
     end

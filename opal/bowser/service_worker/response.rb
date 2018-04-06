@@ -17,6 +17,10 @@ module Bowser
         @text ||= `#@native.text()`
       end
 
+      def ok?
+        `!!#@native.ok`
+      end
+
       def to_n
         @native
       end

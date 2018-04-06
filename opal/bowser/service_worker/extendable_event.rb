@@ -8,9 +8,7 @@ module Bowser
       end
 
       def wait_until promise
-        `#@native.waitUntil(#{promise.to_n})`
-
-        promise
+        Promise.from_native `#@native.waitUntil(#{promise.to_n})`
       end
 
       def to_n
