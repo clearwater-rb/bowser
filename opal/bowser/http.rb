@@ -1,4 +1,3 @@
-require 'native'
 require 'promise'
 
 require 'bowser/http/request'
