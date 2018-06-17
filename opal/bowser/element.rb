@@ -1,9 +1,10 @@
 require 'bowser/event_target'
-require 'bowser/file_list'
 require 'bowser/delegate_native'
-require 'bowser/iterable'
 
 module Bowser
+  autoload :FileList, 'bowser/file_list'
+  autoload :Iterable, 'bowser/iterable'
+
   # Wrap a native DOM element
   class Element
     include EventTarget
