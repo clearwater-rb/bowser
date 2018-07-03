@@ -1,4 +1,4 @@
-require 'promise'
+require 'bowser/promise'
 
 module Bowser
   class Geolocation

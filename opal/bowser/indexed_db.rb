@@ -1,5 +1,5 @@
 require 'bowser/event_target'
-require 'promise'
+require 'bowser/promise'
 
 module Bowser
   class IndexedDB
@@ -54,10 +54,12 @@ module Bowser
     end
 
     def then &block
-      if @native
-        block.call
+      if @open
+        Promise.resolve block.call
       else
-        @thens << block
+        Promise.new do |p|
+          @thens << proc { p.resolve block.call }
+        end
       end
     end
 

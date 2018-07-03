@@ -1,5 +1,6 @@
 require 'bowser/delegate_native'
 require 'bowser/event_target'
+require 'bowser/promise'
 
 module Bowser
   module Window
@@ -20,18 +21,26 @@ module Bowser
       end
     else
       def animation_frame &block
-        delay(1.0 / 60, &block)
+        delay(0, &block)
         self
       end
     end
 
-    # Run the given block after the specified number of seconds has passed.
-    #
-    # @param duration [Numeric] the number of seconds to wait
     def delay duration, &block
-      `setTimeout(function() { #{block.call} }, duration * 1000)`
-      self
+      Promise.new do |p|
+        function = proc do
+          begin
+            yield if block_given?
+            p.resolve
+          rescue => e
+            p.reject e
+          end
+        end
+
+        `setTimeout(function() { #{block.call} }, duration * 1000)`
+      end
     end
+    alias set_timeout delay
 
     # Run the given block every `duration` seconds
     #
@@ -40,6 +49,7 @@ module Bowser
       `setInterval(function() { #{block.call} }, duration * 1000)`
       self
     end
+    alias set_interval interval
 
     # @return [Location] the browser's Location object
     def location

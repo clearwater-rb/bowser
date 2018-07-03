@@ -1,5 +1,5 @@
 require 'bowser/event_target'
-require 'promise'
+require 'bowser/promise'
 
 module Bowser
   class FileList
