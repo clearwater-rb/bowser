@@ -27,12 +27,10 @@ module Bowser
       end
 
       request.on :upgradeneeded do |event|
-        puts 'upgradeneeded'
         @native = event.target.result
 
         if block_given?
           yield self
-          puts 'upgraded'
         else
           raise ArgumentError, "You must provide a block to `#{self.class}.new` in order to set up the database if the user's browser does not have it."
         end
