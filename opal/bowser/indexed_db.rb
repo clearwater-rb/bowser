@@ -128,22 +128,25 @@ module Bowser
         p
       end
 
-      def get_all klass, count: `undefined`
-        p = Promise.new
-        query = block_given? ? yield(Query.new) : `undefined`
+      def get_all klass, count: nil, index: nil
+        Promise.new do |p|
+          query = block_given? ? yield(Query.new) : `undefined`
 
-        request = Request.new(`#@native.getAll(#{query}, #{count})`)
-        request.on :success do |event|
-          p.resolve event.target.result.map { |js_obj|
-            `delete #{js_obj}.$$id` # Remove old Ruby runtime metadata
-            `Object.assign(#{klass.allocate}, #{js_obj})`
-          }
+          request = if index
+                      index(index).get_all(klass, count: count)
+                    else
+                      Request.new(`#@native.getAll(#{query}, #{count || `undefined`})`)
+                    end
+          request.on :success do |event|
+            p.resolve event.target.result.map { |js_obj|
+              `delete #{js_obj}.$$id` # Remove old Ruby runtime metadata
+              `Object.assign(#{klass.allocate}, #{js_obj})`
+            }
+          end
+          request.on :error do |event|
+            p.reject event.target.result
+          end
         end
-        request.on :error do |event|
-          p.reject event.target.result
-        end
-
-        p
       end
 
       def index name
