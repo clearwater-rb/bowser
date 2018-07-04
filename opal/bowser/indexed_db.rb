@@ -20,6 +20,7 @@ module Bowser
       end
       request.on :success do |event|
         @native = event.target.result
+        @open = true
 
         @thens.each(&:call)
         @thens.clear
