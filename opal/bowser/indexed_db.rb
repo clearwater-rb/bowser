@@ -52,6 +52,18 @@ module Bowser
       transaction(store).object_store(store)
     end
 
+    def put **things # TODO: Come up with a less terrible name
+      things.each do |store_name, records|
+        transaction(store_name, :readwrite)
+          .object_store(store_name)
+          .tap do |store|
+            records.each do |record|
+              store.put record
+            end
+          end
+      end
+    end
+
     def transaction name, mode=:readonly
       Transaction.new(`#@native.transaction(#{name}, #{mode})`)
     end
