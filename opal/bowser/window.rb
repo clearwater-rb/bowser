@@ -37,19 +37,21 @@ module Bowser
           end
         end
 
-        `setTimeout(function() { #{block.call} }, duration * 1000)`
+        set_timeout duration, &block
       end
     end
-    alias set_timeout delay
 
     # Run the given block every `duration` seconds
     #
     # @param duration [Numeric] the number of seconds between runs
     def interval duration, &block
       `setInterval(function() { #{block.call} }, duration * 1000)`
-      self
     end
     alias set_interval interval
+
+    def set_timeout duration, &block
+      `setTimeout(function() { #{block.call} }, duration * 1000)`
+    end
 
     # @return [Location] the browser's Location object
     def location
