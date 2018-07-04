@@ -48,6 +48,10 @@ module Bowser
       # is the end state we want after this method call anyway.
     end
 
+    def [] store
+      transaction(store).object_store(store)
+    end
+
     def transaction name, mode=:readonly
       Transaction.new(`#@native.transaction(#{name}, #{mode})`)
     end
