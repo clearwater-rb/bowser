@@ -23,7 +23,7 @@ module Bowser
         @open = true
 
         @thens.each(&:call)
-        @thens.clear
+        @thens = []
       end
 
       request.on :upgradeneeded do |event|
