@@ -29,24 +29,34 @@ Bowser.document # Handle to the current document
 Bowser.window   # Handle to the current window
 ```
 
-### AJAX support
+### HTTP support
 
-To make HTTP requests to your API, for example, you can do:
+To load HTTP support, require it by running:
+
+```ruby
+require 'bowser/http'
+```
+
+To make HTTP requests to your API, you can use `Bowser::HTTP.fetch`:
 
 ```ruby
 Bowser::HTTP.fetch('/api/things')
 ```
 
-It returns a `Promise`, which you can call `then`, `fail`, or `always` on in order to execute a block of code based on success, failure, or either one, respectively.
+It returns a [`Bowser::Promise`](https://github.com/clearwater-rb/bowser/blob/master/opal/bowser/promise.rb), on which you can call `then` or `catch` in order to execute a block of code based on success or failure, respectively.
 
 ```ruby
 Bowser::HTTP.fetch(url)
+  .then(&:json) # JSONify the response
   .then { |response| do_something_with(response.json) }
-  .fail { |exception| warn exception.message }
-  .always { log "Fetched #{url}" }
+  .catch { |exception| warn exception.message }
 ```
 
-The current implementation uses the `Promise` class from the Opal standard library, but it is not fully A+-compliant, so we're in the process of implementing our own.
+To make `POST` requests, you can pass the `method` keyword argument. The body of the post is represented in the `data` keyword argument. This is in contrast to the ES6 `fetch` function, which uses `body`, but requires a string. The `data` argument lets you pass in a string or a hash, which will be converted to JSON:
+
+```ruby
+Bowser::HTTP.fetch(url, method: :post, data: { name: 'Bowser' })
+```
 
 ## Contributing
 
