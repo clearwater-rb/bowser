@@ -34,5 +34,13 @@ module Bowser
       expect(obj.foo).to be_nil
       expect(obj.bar).to be_nil
     end
+
+    it 'returns nil if the property is NaN' do
+      obj = klass.new(`{
+        foo: NaN,
+      }`)
+
+      expect(obj.foo).to be_nil
+    end
   end
 end

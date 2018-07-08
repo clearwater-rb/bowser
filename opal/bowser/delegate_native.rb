@@ -29,6 +29,8 @@ module Bowser
 
       if `property === false`
         return false
+      elsif `typeof(property) === 'number' && isNaN(property)`
+        return nil
       else
         property = `property == null ? nil : property`
       end
