@@ -201,6 +201,33 @@ module Bowser
 
         p
       end
+
+      def cursor klass, direction: :next, count: `undefined`
+        query = block_given? ? (yield Query.new) : `undefined`
+
+        Promise.new do |p|
+          results = []
+          req = `#@native.openCursor(#{query}, #{direction})`
+          index = 0
+
+          %x{
+            req.onsuccess = #{proc { |event|
+              cursor = `event.target.result`
+              if `#{cursor} && !(count < ++index)`
+                js_obj = `#{cursor}.value`
+                `delete #{js_obj}.$$id` # Remove old Ruby runtime metadata
+
+                value = `Object.assign(#{klass.allocate}, #{js_obj})`
+                `results.push(value)`
+                `#{cursor}.continue()`
+              else
+                p.resolve results
+              end
+            }};
+            req.onerror = #{proc { |e| p.reject e }};
+          }
+        end
+      end
     end
 
     class Query
