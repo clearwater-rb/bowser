@@ -128,15 +128,15 @@ module Bowser
         p
       end
 
-      def get_all klass, count: nil, index: nil
+      def get_all klass, count: nil, index: nil, &block
+        if index
+          return index(index).get_all(klass, count: count, &block)
+        end
+
         Promise.new do |p|
           query = block_given? ? yield(Query.new) : `undefined`
 
-          request = if index
-                      index(index).get_all(klass, count: count)
-                    else
-                      Request.new(`#@native.getAll(#{query}, #{count || `undefined`})`)
-                    end
+          request = Request.new(`#@native.getAll(#{query}, #{count || `undefined`})`)
           request.on :success do |event|
             p.resolve event.target.result.map { |js_obj|
               `delete #{js_obj}.$$id` # Remove old Ruby runtime metadata
