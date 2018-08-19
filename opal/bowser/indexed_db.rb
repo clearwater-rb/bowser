@@ -213,13 +213,13 @@ module Bowser
           %x{
             req.onsuccess = #{proc { |event|
               cursor = `event.target.result`
-              if `#{cursor} && !(count < ++index)`
+              if `#{cursor}`
                 js_obj = `#{cursor}.value`
                 `delete #{js_obj}.$$id` # Remove old Ruby runtime metadata
 
                 value = `Object.assign(#{klass.allocate}, #{js_obj})`
                 `results.push(value)`
-                `#{cursor}.continue()`
+                `(!(count < index++)) ? #{cursor}.continue() : #{p.resolve results}`
               else
                 p.resolve results
               end
