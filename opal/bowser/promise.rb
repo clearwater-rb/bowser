@@ -159,7 +159,7 @@ module Bowser
       # object.
       def native.=== value
         RUBY_ENGINE == 'opal' &&
-          `value == null || value.$$is_string || value.$$is_number || !('$$class' in value)`
+          `value == null || value.$$is_string || value.$$is_number || value.$$is_boolean || !('$$class' in value)`
       end
     end
   end
