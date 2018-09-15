@@ -30,14 +30,13 @@ module Bowser
       Promise.new do |p|
         function = proc do
           begin
-            yield if block_given?
-            p.resolve
+            p.resolve(block_given? ? yield : nil)
           rescue => e
             p.reject e
           end
         end
 
-        set_timeout duration, &block
+        set_timeout duration, &function
       end
     end
 
