@@ -35,11 +35,14 @@ module Bowser
       @callbacks = []
 
       yield self if block_given?
+
+      @then = method(:then).to_proc
+      @catch = method(:catch).to_proc
     end
 
-    def then &block
+    def then handler=nil, &block
       self.class.new do |p|
-        callback = SuccessCallback.new(p, block)
+        callback = SuccessCallback.new(p, handler || block)
 
         if pending?
           @callbacks << callback
@@ -51,9 +54,9 @@ module Bowser
       end
     end
 
-    def catch &block
+    def catch handler=nil, &block
       self.class.new do |p|
-        callback = FailureCallback.new(p, block)
+        callback = FailureCallback.new(p, handler || block)
 
         if pending?
           @callbacks << callback
