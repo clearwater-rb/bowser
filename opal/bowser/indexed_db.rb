@@ -219,7 +219,12 @@ module Bowser
 
                 value = `Object.assign(#{klass.allocate}, #{js_obj})`
                 `results.push(value)`
-                `(!(count < index++)) ? #{cursor}.continue() : #{p.resolve results}`
+
+                if `count != null && (++index < count)`
+                  `#{cursor}.continue()`
+                else
+                  p.resolve results
+                end
               else
                 p.resolve results
               end
