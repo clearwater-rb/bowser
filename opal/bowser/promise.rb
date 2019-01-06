@@ -2,6 +2,19 @@ module Bowser
   class Promise
     attr_reader :value
 
+    if RUBY_ENGINE == 'opal'
+      def self.from_native promise
+        new do |p|
+          %x{
+            #{promise}.then(
+              function(value) { #{p.resolve(`value`)} },
+              function(reason) { #{p.reject(`reason`)} }
+            )
+          }
+        end
+      end
+    end
+
     def self.race promises
       new do |promise|
         promises.each do |p|
