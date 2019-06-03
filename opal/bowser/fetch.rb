@@ -20,11 +20,9 @@ module Bowser
   end
 end
 
-module Kernel
-  def fetch url, **options
-    ::Bowser::Promise.from_native(`fetch(#{url}, #{options.to_n})
-      .then(function(response) {
-        return #{::Bowser::Fetch::Response.new(`response`);
-      }})`)
-  end
+def fetch url, **options
+  ::Bowser::Promise.from_native(`fetch(#{url}, #{options.to_n})
+    .then(function(response) {
+      return #{::Bowser::Fetch::Response.new(`response`);
+    }})`)
 end
