@@ -65,8 +65,8 @@ module Bowser
     # @param reason [String, nil] the reason this socket is being closed
     def close reason=`undefined`
       @autoreconnect = false
-      @handlers = {}
       `#@native.close(reason)`
+      @handlers = Hash.new { |h, k| h[k] = [] }
     end
 
     private
