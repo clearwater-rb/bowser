@@ -1,3 +1,5 @@
+require 'json'
+
 module Bowser
   module Fetch
     class Response
